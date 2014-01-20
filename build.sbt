@@ -1,0 +1,15 @@
+name := "ist-app-market"
+
+version := "1.0-SNAPSHOT"
+
+libraryDependencies ++= Seq(
+//  "pt.ist" % "fenixedu-api" % "1.0.0",
+  "mysql" % "mysql-connector-java" % "5.1.18",
+  javaJdbc,
+  javaEbean,
+  cache
+)     
+
+resolvers += "fenix-ashes-maven-repository" at "https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository"
+
+play.Project.playJavaSettings
