@@ -21,3 +21,6 @@ server.pid
 *.iml
 *.eml
 conf/application.conf
+/bin
+# Ignore application conf files #
+application.conf
