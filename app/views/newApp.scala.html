@@ -1,0 +1,26 @@
+@(user: User, appForm: Form[App]) 
+@import helper._ 
+
+@main("New App") {
+	
+	<h1>@user.applications.size Apps for user @user.username</h1>
+
+	<h2>All Apps</h2>
+
+	<ul> @user.applications.map { app => <li>@app.name</li> } </ul>
+
+<h2>Create a new App</h2>
+	
+    @helper.form(action = routes.AppController.newApp) {
+    
+	    @helper.inputText(appForm("name"), 'placeholder -> "Application Name", '_label -> "")
+	    
+	    @helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
+	    
+	    <a href="@routes.UserController.users">Back</a>
+
+	    <input type="submit" value="Create">
+	    
+    }
+	 
+}
