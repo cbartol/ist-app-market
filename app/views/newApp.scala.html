@@ -7,7 +7,13 @@
 
 	<h2>All Apps</h2>
 
-	<ul> @user.applications.map { app => <li>@app.name</li> } </ul>
+	<ul> @user.applications.map { app =>
+			<li>@app.name</li>
+			@form(routes.AppController.deleteApp(app.id)) {
+	        	<input type="submit" value="Delete">
+	        }
+        }
+    </ul>
 
 <h2>Create a new App</h2>
 	

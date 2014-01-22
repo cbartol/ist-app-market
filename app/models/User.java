@@ -25,33 +25,29 @@ public class User extends Model {
 
     @ManyToMany()
     public Set<App> applications;
-    
-    public static Finder<String, User> find = new Finder<String, User>(String.class, User.class);
+
+    private static Finder<String, User> find = new Finder<String, User>(String.class, User.class);
 
     public static List<User> all() {
         return find.all();
     }
-    
+
     public static User get(String username) {
-    	return find.byId(username);
+        return find.byId(username);
     }
 
-    public static void create(User user) {
-        user.save();
-    }
-    
     public static void deleteUser(String username) {
-    	find.byId(username).delete();;
+        find.byId(username).delete();
     }
-    
+
     public Set<App> getApplications() {
-    	return Sets.newHashSet(Iterables.filter(App.all(), isUserApp));
+        return Sets.newHashSet(Iterables.filter(App.all(), isUserApp));
     }
-    
+
     private static Predicate<App> isUserApp = new Predicate<App>() {
-		@Override
-		public boolean apply(App app) {
-			return app!=null && app.authors.contains(this);
-		}
-	};  	
+        @Override
+        public boolean apply(App app) {
+            return app != null && app.authors.contains(this);
+        }
+    };
 }

@@ -4,6 +4,8 @@ import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import actions.CreateUserAction;
+import actions.DeleteUserAction;
 
 public class UserController extends Controller {
     static Form<User> UserForm = Form.form(User.class);
@@ -17,14 +19,14 @@ public class UserController extends Controller {
         if (filledForm.hasErrors()) {
             return badRequest(views.html.index.render(User.all(), filledForm));
         } else {
-        	User.create(filledForm.get());
+            (new CreateUserAction(filledForm.get())).run();
             return redirect(routes.UserController.users());
         }
     }
 
     public static Result deleteUser(String username) {
-    	User.deleteUser(username);
+        (new DeleteUserAction(User.get(username))).run();
         return redirect(routes.UserController.users());
     }
-    
+
 }
