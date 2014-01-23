@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit lang: Lang)
 
 <!DOCTYPE html>
 
@@ -24,7 +24,7 @@
 				<a href="@routes.Application.register">Register</a>
 			}
     	</header>
-    
+    	<p><a href="@routes.Application.changeLang("pt",request.uri)">pt</a> <a href="@routes.Application.changeLang("en",request.uri)">en</a></p>
         @content
     </body>
 </html>

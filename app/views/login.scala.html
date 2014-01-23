@@ -4,7 +4,7 @@
 
 @main("Login") {
 
-	<h1>Sign in</h1>
+	<h1>@Messages("label.sign.in.title")</h1>
 	
 	@if(loginForm.hasGlobalErrors) {
 	    <p class="error" style="color: red;">
@@ -18,7 +18,7 @@
 	    </p>
 	    
 	    <p>
-	      <button type="submit">Login</button>
+	      <button type="submit">@Messages("button.login")</button>
 	    </p>
 	}
 	

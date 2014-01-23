@@ -3,13 +3,13 @@
 
 @main("New App") {
 	
-	<h1>@user.applications.size Apps for user @user.username</h1>
+	<h1>@Messages("lable.user.apps.title", user.applications.size, user.username)</h1>
 
-	<h2>All Apps</h2>
+	<h2>@Messages("label.apps.title")</h2>
 
 	@apps(user.applications)
 
-	<h2>Create a new App</h2>
+	<h2>@Messages("label.create.app.title")</h2>
 	
     @helper.form(action = routes.AppController.newApp) {
     
@@ -17,7 +17,7 @@
 	    
 	    @helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
 	    
-	    <input type="submit" value="Create">
+	    <input type="submit" value="@Messages("button.create")">
 	    
     }
 	 

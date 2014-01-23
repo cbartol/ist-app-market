@@ -4,7 +4,7 @@
 
 @main("Register new User") {
     
-    <h2>Create a new user</h2>
+    <h2>@Messages("label.create.user.title")</h2>
     
     @if(userForm.hasGlobalErrors) {
 	    <p class="error" style="color: red;">
@@ -14,9 +14,9 @@
 	
     @form(routes.UserController.newUser()) {
         
-        @inputText(userForm("Username")) 
+        @inputText(userForm(Messages("input.username"))) 
         
-        <input type="submit" value="Create">
+        <input type="submit" value="@Messages("button.create")">
         
     }
     

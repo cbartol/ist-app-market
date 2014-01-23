@@ -5,6 +5,7 @@
 # Home page
 
 GET			/							controllers.Application.index()
+GET			/language					controllers.Application.changeLang(lang: String, url: String)
 
 # Login
 

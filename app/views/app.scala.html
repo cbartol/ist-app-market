@@ -5,11 +5,11 @@
 	
 	<h1>@app.name</h1>
 
-	<h2>Description</h2>
+	<h2>@Messages("label.app.description.title")</h2>
 	
 	<p>@app.description</p>
 
-	<h2>Authors</h2>
+	<h2>@Messages("label.app.authors.title")</h2>
 
 	<ul> @app.authors.map { user =>
 			<li>@user.username</li>
