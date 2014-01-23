@@ -1,0 +1,19 @@
+@(app: App) 
+@import helper._ 
+
+@main("App") {
+	
+	<h1>@app.name</h1>
+
+	<h2>Description</h2>
+	
+	<p>@app.description</p>
+
+	<h2>Authors</h2>
+
+	<ul> @app.authors.map { user =>
+			<li>@user.username</li>
+        }
+    </ul>
+
+}

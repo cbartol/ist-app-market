@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 import models.App;
 import models.User;
 import play.data.Form;
@@ -10,26 +14,41 @@ import actions.DeleteAppAction;
 
 public class AppController extends Controller {
     static Form<App> AppForm = Form.form(App.class);
-    private static User selectedUser;
 
-    public static Result apps(String username) {
-        selectedUser = User.get(username);
-        return ok(views.html.newApp.render(selectedUser, AppForm));
+    public static Result apps() {
+        return ok(views.html.apps.render(Sets.newHashSet(App.all())));
+    }
+    
+    public static Result userApps(String username) {
+        return ok(views.html.newApp.render(User.get(username), AppForm));
     }
 
     public static Result deleteApp(Long id) {
         (new DeleteAppAction(App.get(id))).run();
-        return apps(selectedUser.username);
+        return redirect(routes.AppController.userApps(getUsername()));
     }
 
     public static Result newApp() {
         Form<App> filledForm = AppForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            return badRequest(views.html.newApp.render(selectedUser, filledForm.bindFromRequest()));
+            return badRequest(views.html.newApp.render(User.get(getUsername()), filledForm.bindFromRequest()));
         } else {
             App app = filledForm.get();
-            (new CreateAppAction(selectedUser, app)).run();
-            return apps(selectedUser.username);
+            (new CreateAppAction(User.get(getUsername()), app)).run();
+            return redirect(routes.AppController.userApps(getUsername()));
         }
+    }
+    
+    public static Result app(Long id) {
+    	return ok(views.html.app.render(App.get(id)));
+    }
+
+    private static String getUsername() {
+    	return session().get("username");
+    }
+    
+    public static Result search(String query) {
+    	Set<App> apps = App.search(query);
+    	return ok(views.html.apps.render(apps));
     }
 }

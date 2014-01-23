@@ -7,15 +7,9 @@
 
 	<h2>All Apps</h2>
 
-	<ul> @user.applications.map { app =>
-			<li>@app.name</li>
-			@form(routes.AppController.deleteApp(app.id)) {
-	        	<input type="submit" value="Delete">
-	        }
-        }
-    </ul>
+	@apps(user.applications)
 
-<h2>Create a new App</h2>
+	<h2>Create a new App</h2>
 	
     @helper.form(action = routes.AppController.newApp) {
     
@@ -23,8 +17,6 @@
 	    
 	    @helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
 	    
-	    <a href="@routes.UserController.users">Back</a>
-
 	    <input type="submit" value="Create">
 	    
     }

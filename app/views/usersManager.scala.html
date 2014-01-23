@@ -1,0 +1,24 @@
+@(users: List[User], userForm: Form[User])
+
+@import helper._
+
+@main("Users Admin") {
+    
+    <h1>@users.size() user(s)</h1>
+    
+    <ul>
+        @for(user <- users) {
+            <li>
+                
+                <div>@user.username<div>
+                
+                <a href="@routes.AppController.userApps(user.username)">Apps</a>
+                
+                @form(routes.UserController.deleteUser(user.username)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+}
