@@ -1,0 +1,15 @@
+@(apps: Set[App]) 
+@import helper._
+
+<ul>
+	@apps.map { app =>
+		<li><a href="@routes.AppController.app(app.id)">@app.name</a>
+	
+			<p>
+				@form(routes.AppController.deleteApp(app.id)) {
+					<input type="submit" value="Delete"> 
+				}
+			</p>
+		</li> 
+	}
+</ul>

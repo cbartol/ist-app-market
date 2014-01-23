@@ -1,34 +1,15 @@
-@(users: List[User], userForm: Form[User])
+@(userForm: Form[User])
 
 @import helper._
 
-@main("Users Admin") {
+@main("Index") {
     
-    <h1>@users.size() user(s)</h1>
+    <h1>Welcome, please login</h1>
     
-    <ul>
-        @for(user <- users) {
-            <li>
-                
-                <div>@user.username<div>
-                
-                <a href="@routes.AppController.apps(user.username)">Apps</a>
-                
-                @form(routes.UserController.deleteUser(user.username)) {
-                    <input type="submit" value="Delete">
-                }
-            </li>
-        }
-    </ul>
-    
-    <h2>Create a new user</h2>
-    
-    @form(routes.UserController.newUser()) {
-        
-        @inputText(userForm("Username")) 
-        
-        <input type="submit" value="Create">
-        
-    }
+    @if(flash.contains("success")) {
+    <p class="success">
+        @flash.get("success")
+    </p>
+}
     
 }

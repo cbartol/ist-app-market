@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.google.common.collect.Sets;
+
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -35,4 +37,9 @@ public class App extends Model {
     public static App get(Long id) {
         return find.byId(id);
     }
+
+	public static Set<App> search(String query) {
+		//TODO
+		return Sets.newHashSet(all());
+	}
 }

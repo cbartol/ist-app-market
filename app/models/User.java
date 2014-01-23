@@ -9,16 +9,10 @@ import javax.persistence.ManyToMany;
 
 import play.db.ebean.Model;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
-
 @Entity
 public class User extends Model {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
 
     @Id
     public String username;
@@ -37,17 +31,17 @@ public class User extends Model {
     }
 
     public static void deleteUser(String username) {
-        find.byId(username).delete();
+        User user = get(username);
+        user.removeAllAplications();
+        user.delete();
     }
 
-    public Set<App> getApplications() {
-        return Sets.newHashSet(Iterables.filter(App.all(), isUserApp));
+    public void removeApplication(Long id) {
+      applications.remove(App.get(id));
     }
 
-    private static Predicate<App> isUserApp = new Predicate<App>() {
-        @Override
-        public boolean apply(App app) {
-            return app != null && app.authors.contains(this);
-        }
-    };
+    public void removeAllAplications() {
+      applications.clear();
+    }
+
 }
