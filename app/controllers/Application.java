@@ -1,15 +1,23 @@
 package controllers;
 
+import actions.CreateUserAction;
+
+import com.google.gson.JsonObject;
+
 import models.Login;
 import models.User;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import pt.ist.fenixedu.sdk.*;
 
 public class Application extends Controller {
+	
+	public static FenixEduClient client = FenixEduClientFactory.getSingleton();
 
     public static Result index() {
+
         return ok(views.html.index.render(Form.form(User.class)));
     }
 
@@ -42,6 +50,31 @@ public class Application extends Controller {
     public static Result changeLang(String lang, String url) {
         changeLang(lang);
         return redirect(url);
+    }
+    
+    public static Result signIn() {
+    	return redirect(client.getAuthenticationUrl());
+    }
+    
+    public static Result callback() {
+    	String code = request().getQueryString("code");
+    	client.setCode(code);
+    	JsonObject obj = client.getPerson();
+    	User user = User.get(obj.get("username").getAsString());
+    	
+    	if (user == null) {
+    		user = new User();
+    		user.istID = obj.get("username").getAsString();
+        	user.name = obj.get("name").getAsString();
+        	user.email = obj.get("email").getAsString();
+        	
+        	CreateUserAction action = new CreateUserAction(user);
+        	action.run();
+    	}
+    	
+    	session("username", user.istID);
+    	
+    	return redirect(routes.AppController.userApps(user.istID));
     }
 
 }

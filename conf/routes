@@ -13,6 +13,9 @@ GET			/login						controllers.Application.login()
 GET			/logout						controllers.Application.logout()
 POST		/login						controllers.Application.authenticate()
 
+GET			/auth/fenix					controllers.Application.signIn()
+GET			/auth/fenix/callback		controllers.Application.callback()
+
 # Register
 
 GET			/register					controllers.Application.register()
@@ -28,6 +31,7 @@ POST		/users/:username/delete		controllers.UserController.deleteUser(username: S
 GET			/apps						controllers.AppController.apps()
 GET			/apps/:id					controllers.AppController.app(id: Long)
 GET			/users/:username/apps		controllers.AppController.userApps(username: String)
+GET			/users/:username/apps/new	controllers.AppController.newApplication(username: String)
 POST		/users/app					controllers.AppController.newApp()
 POST		/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
 

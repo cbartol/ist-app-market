@@ -20,7 +20,7 @@ public class DeleteUserAction extends Action {
     @Override
     protected void execute() {
         //TODO it will throw an error if user has apps
-        find.byId(user.username).delete();
+        find.byId(user.istID).delete();
     }
 
 }

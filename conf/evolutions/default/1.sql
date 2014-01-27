@@ -11,30 +11,32 @@ create table app (
 ;
 
 create table user (
-  username                  varchar(255) not null,
-  constraint pk_user primary key (username))
+  ist_id                    varchar(255) not null,
+  name                      varchar(255),
+  email                     varchar(255),
+  constraint pk_user primary key (ist_id))
 ;
 
 
 create table app_user (
   app_id                         bigint not null,
-  user_username                  varchar(255) not null,
-  constraint pk_app_user primary key (app_id, user_username))
+  user_ist_id                    varchar(255) not null,
+  constraint pk_app_user primary key (app_id, user_ist_id))
 ;
 
 create table user_app (
-  user_username                  varchar(255) not null,
+  user_ist_id                    varchar(255) not null,
   app_id                         bigint not null,
-  constraint pk_user_app primary key (user_username, app_id))
+  constraint pk_user_app primary key (user_ist_id, app_id))
 ;
 
 
 
 alter table app_user add constraint fk_app_user_app_01 foreign key (app_id) references app (id) on delete restrict on update restrict;
 
-alter table app_user add constraint fk_app_user_user_02 foreign key (user_username) references user (username) on delete restrict on update restrict;
+alter table app_user add constraint fk_app_user_user_02 foreign key (user_ist_id) references user (ist_id) on delete restrict on update restrict;
 
-alter table user_app add constraint fk_user_app_user_01 foreign key (user_username) references user (username) on delete restrict on update restrict;
+alter table user_app add constraint fk_user_app_user_01 foreign key (user_ist_id) references user (ist_id) on delete restrict on update restrict;
 
 alter table user_app add constraint fk_user_app_app_02 foreign key (app_id) references app (id) on delete restrict on update restrict;
 

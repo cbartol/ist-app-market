@@ -3,8 +3,11 @@
 @import helper._
 
 @main("Index") {
-    
-    <h1>@Messages("label.welcome.message.title")</h1>
+    <section class="jumbotron">
+    	<div class="container">
+    		<h1>@Messages("label.welcome.message.title")</h1>
+    	</div>
+    </section>
     
     @if(flash.contains("success")) {
     <p class="success">

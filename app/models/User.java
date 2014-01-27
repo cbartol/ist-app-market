@@ -15,7 +15,10 @@ public class User extends Model {
 	private static final long serialVersionUID = 1L;
 
     @Id
-    public String username;
+    public String istID;
+    
+    public String name;
+    public String email;
 
     @ManyToMany()
     public Set<App> applications;

@@ -1,0 +1,122 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+}
+
+header {
+	position: relative;
+	height: 165px;
+	padding: 40px 0;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+
+header nav {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	text-align: right;
+}
+
+header a {
+	text-decoration: none;
+}
+
+a {
+	color: #19accd;
+}
+
+#logo {
+	background:  url('http://fenixedu.org/images/logo.svg') no-repeat;
+	background-size: contain;
+	display: block;
+	height: 85px;
+}
+
+.button  {
+	background: none;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	display: inline-block;
+	color: #19accd;
+	text-transform: uppercase;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	padding: 14px 15px;
+	border: 1px solid #19accd;
+	-webkit-transition: all 0.3s ease;
+}
+
+.button:hover {
+	color: #fff;
+	background-color: #19accd;
+}
+
+.jumbotron {
+	text-align: center;
+	font-weight: 100;
+}
+
+.jumbotron h1 {
+	font-size: 3em;
+}
+
+.toolbar {
+	margin-top: 40px;
+}
+
+h2 {
+	color: #999;
+}
+
+input[type=text] {
+	background: none;
+	border: none;
+	border: 1px solid #999;
+	padding: 10px;
+	width: 200px;
+	font-size: 0.9em;
+	text-transform: uppercase;
+
+}
+
+input[type=submit] {
+	margin-top: 10px;
+	font-size: 90%;
+}
+
+form {
+	margin-top: 20px;
+}
+
+dd.info {
+	font-size: 0.8em;
+	margin-bottom: 10px;
+}
+
+.app-image {
+	display: block;
+	margin: 0 auto;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	background: url("http://placehold.it/150x150") no-repeat;
+}
+
+.apps-list {
+	margin-top: 20px;
+}
+
+.apps-list li {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.apps-list li > a {
+	text-decoration: none;
+}

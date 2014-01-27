@@ -1,0 +1,23 @@
+@(user: User) 
+@import helper._ 
+
+@main(s"Applications | ${user.istID}") {
+
+	<section>
+		<div class="container">
+			<h1>@Messages("label.apps")</h1>
+			<h2>@Messages("label.user.apps.title", user.applications.size)</h2>
+		</div>
+	</section>
+	<section>
+		<div class="container">
+			@apps(user.applications)
+		</div>
+	</section>
+	<section>
+		<div class="container toolbar">
+			<a href="@routes.AppController.newApplication(user.istID)" class="button">@Messages("label.apps.create")</a>
+		</div>
+	</section>
+	 
+}

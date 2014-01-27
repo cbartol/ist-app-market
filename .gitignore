@@ -21,6 +21,7 @@ server.pid
 *.iml
 *.eml
 conf/application.conf
+conf/fenixedu.config
 /bin
 # Ignore application conf files #
 application.conf
