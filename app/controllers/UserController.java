@@ -11,7 +11,8 @@ public class UserController extends Controller {
     static Form<User> UserForm = Form.form(User.class);
     
     public static Result user(String username) {
-    	return redirect(routes.AppController.userApps(username));
+    	//return redirect(routes.AppController.userApps(username));
+    	return ok(views.html.user.render(User.get(username)));
     }
     
     public static Result users() {

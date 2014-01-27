@@ -1,0 +1,23 @@
+@(user: User)
+
+@smallName(name: String) = @{
+	val arr = name.split(" ")
+	arr.head + " " + arr.last
+}
+
+@main(s"Profile | ${smallName(user.name)}") {
+
+	<section>
+		<div class="container">
+			<h1 class="sixteen columns">@smallName(user.name)</h1>
+		</div>
+	</section>
+	<section>
+		<div class="container">
+			<h2 class="sixteen columns">@Messages("label.apps")</h2>
+			@apps(user.applications)
+			<a class="sixteen columns text-right" href="@routes.AppController.userApps(user.username)">All apps</a>
+		</div>
+	</section>
+
+}

@@ -10,11 +10,11 @@
         @for(user <- users) {
             <li>
                 
-                <div>@user.istID<div>
+                <div>@user.username<div>
                 
-                <a href="@routes.AppController.userApps(user.istID)">Apps</a>
+                <a href="@routes.AppController.userApps(user.username)">Apps</a>
                 
-                @form(routes.UserController.deleteUser(user.istID)) {
+                @form(routes.UserController.deleteUser(user.username)) {
                     <input type="submit" value="@Messages("button.delete")">
                 }
             </li>

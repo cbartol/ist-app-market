@@ -112,11 +112,15 @@ dd.info {
 	margin-top: 20px;
 }
 
-.apps-list li {
+.apps-list > li {
 	text-align: center;
-	margin-bottom: 20px;
+	margin: 20px 0;
 }
 
 .apps-list li > a {
 	text-decoration: none;
+}
+
+.text-right {
+	text-align: right;
 }

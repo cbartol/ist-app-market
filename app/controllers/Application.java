@@ -64,7 +64,7 @@ public class Application extends Controller {
     	
     	if (user == null) {
     		user = new User();
-    		user.istID = obj.get("username").getAsString();
+    		user.username = obj.get("username").getAsString();
         	user.name = obj.get("name").getAsString();
         	user.email = obj.get("email").getAsString();
         	
@@ -72,9 +72,9 @@ public class Application extends Controller {
         	action.run();
     	}
     	
-    	session("username", user.istID);
+    	session("username", user.username);
     	
-    	return redirect(routes.AppController.userApps(user.istID));
+    	return redirect(routes.AppController.userApps(user.username));
     }
 
 }

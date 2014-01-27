@@ -1,7 +1,7 @@
 @(user: User) 
 @import helper._ 
 
-@main(s"Applications | ${user.istID}") {
+@main(s"Applications | ${user.username}") {
 
 	<section>
 		<div class="container">
@@ -16,7 +16,7 @@
 	</section>
 	<section>
 		<div class="container toolbar">
-			<a href="@routes.AppController.newApplication(user.istID)" class="button">@Messages("label.apps.create")</a>
+			<a href="@routes.AppController.newApplication(user.username)" class="button">@Messages("label.apps.create")</a>
 		</div>
 	</section>
 	 
