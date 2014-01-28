@@ -16,6 +16,9 @@ public class User extends Model {
 
     @Id
     public String username;
+    
+    public String name;
+    public String email;
 
     @ManyToMany()
     public Set<App> applications;

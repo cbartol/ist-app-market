@@ -3,28 +3,46 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    </head>
-    <body>
-    	<header>
-    		<h1>IST store</h1>
-    		
-    		@if(session.contains("username")) {
-			    <span class="user">
-			    	<a href="@routes.UserController.user(session.get("username"))">@session.get("username")</a>
-			    	<a href="@routes.Application.logout">Logout</a>
-			    </span>
-		    }
-		    @if(!session.contains("username")) {
-				<a href="@routes.Application.login">Login</a>
-				<a href="@routes.Application.register">Register</a>
+<head>
+	<title>@title</title>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/reset.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/modernscale.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/skeleton.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+	<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+	<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="eight columns">
+				<a href="@routes.Application.index" id="logo"></a>
+			</div>
+
+			<nav class="eight columns">
+			@if(session.contains("username")) {
+				<span class="user"> 
+					<a href="@routes.UserController.user(session.get("username"))">@session.get("username")</a>
+					<a href="@routes.Application.logout">Logout</a>
+				</span> 
+			} 
+				
+			@if(!session.contains("username")) { 
+<!-- 				<a href="@routes.Application.login">Login</a>  -->
+				<a href="@routes.Application.signIn" class="button">@Messages("label.sign.in.title")</a>
+<!-- 				<a href="@routes.Application.register">Register</a> -->
 			}
-    	</header>
-    	<p><a href="@routes.Application.changeLang("pt",request.uri)">pt</a> <a href="@routes.Application.changeLang("en",request.uri)">en</a></p>
-        @content
-    </body>
+				<p>
+					<a href="@routes.Application.changeLang("pt",request.uri)">pt</a>
+					<a href="@routes.Application.changeLang("en",request.uri)">en</a>
+				</p>
+			</nav>
+
+		</div>
+	</header>
+		@content
+	<footer>
+	
+	</footer>
+</body>
 </html>

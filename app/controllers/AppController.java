@@ -20,7 +20,7 @@ public class AppController extends Controller {
     }
     
     public static Result userApps(String username) {
-        return ok(views.html.newApp.render(User.get(username), AppForm));
+        return ok(views.html.userApps.render(User.get(username)));
     }
 
     public static Result deleteApp(Long id) {
@@ -37,6 +37,10 @@ public class AppController extends Controller {
             (new CreateAppAction(User.get(getUsername()), app)).run();
             return redirect(routes.AppController.userApps(getUsername()));
         }
+    }
+    
+    public static Result newApplication(String username) {
+    	return ok(views.html.newApp.render(User.get(username), AppForm));
     }
     
     public static Result app(Long id) {

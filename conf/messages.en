@@ -1,13 +1,17 @@
 label.app.description.title=Description
 label.app.authors.title=Authors
 button.delete=Delete
-label.sign.in.title=Sign in
+label.sign.in.title=Sign in with FenixEdu
 button.login=Login
 label.apps.title=All Apps
 label.create.app.title=Create a new App
 button.create=Create
-lable.user.apps.title={0} Apps for user {1}
-label.welcome.message.title=Welcome, please login
+label.user.apps.title={0} apps registered
+label.welcome.message.title=Welcome to Marketplace
 label.create.user.title=Create a new user
 input.username=Username
 label.logout.message=You''ve been logged out
+
+label.apps=Apps
+label.apps.create=Create app
+label.apps.new=New app

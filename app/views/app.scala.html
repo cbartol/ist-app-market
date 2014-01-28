@@ -1,19 +1,30 @@
 @(app: App) 
 @import helper._ 
 
-@main("App") {
+@main(s"Apps | ${app.name}") {
+
+	<section>
+		<div class="container">
+			<h1 class="sixteen columns" style="margin-bottom: 20px;">@app.name</h1>
+			<div class="three columns">
+				<div class="app-image"></div>
+			</div>
+			
+			<article class="thirteen columns">
+				<h3>@Messages("label.app.description.title")</h3>
+				
+				<p>@app.description</p>
+			
+				<h3>@Messages("label.app.authors.title")</h3>
+			
+				<ul> @app.authors.map { user =>
+						<li>@user.username</li>
+			        }
+			    </ul>
+			</article>
+		
+		</div>
+	</section>
 	
-	<h1>@app.name</h1>
-
-	<h2>@Messages("label.app.description.title")</h2>
-	
-	<p>@app.description</p>
-
-	<h2>@Messages("label.app.authors.title")</h2>
-
-	<ul> @app.authors.map { user =>
-			<li>@user.username</li>
-        }
-    </ul>
 
 }

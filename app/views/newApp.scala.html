@@ -1,24 +1,16 @@
 @(user: User, appForm: Form[App]) 
 @import helper._ 
 
-@main("New App") {
-	
-	<h1>@Messages("lable.user.apps.title", user.applications.size, user.username)</h1>
+@main(s"New app | ${user.username}") {
 
-	<h2>@Messages("label.apps.title")</h2>
-
-	@apps(user.applications)
-
-	<h2>@Messages("label.create.app.title")</h2>
-	
-    @helper.form(action = routes.AppController.newApp) {
-    
-	    @helper.inputText(appForm("name"), 'placeholder -> "Application Name", '_label -> "")
-	    
-	    @helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
-	    
-	    <input type="submit" value="@Messages("button.create")">
-	    
-    }
-	 
+	<section>
+		<div class="container">
+			<h1>@Messages("label.apps.new")</h1>
+			@helper.form(action = routes.AppController.newApp) {
+	    		@helper.inputText(appForm("name"), 'placeholder -> "Application Name", '_label -> "")
+	    		@helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
+	     		<input class="button" type="submit" value="@Messages("button.create")">
+    		}
+		</div>
+	</section>
 }

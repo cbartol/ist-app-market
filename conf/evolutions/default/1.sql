@@ -12,6 +12,8 @@ create table app (
 
 create table user (
   username                  varchar(255) not null,
+  name                      varchar(255),
+  email                     varchar(255),
   constraint pk_user primary key (username))
 ;
 
