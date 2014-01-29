@@ -9,21 +9,14 @@ GET			/language					controllers.Application.changeLang(lang: String, url: String
 
 # Login
 
-GET			/login						controllers.Application.login()
-GET			/logout						controllers.Application.logout()
-POST		/login						controllers.Application.authenticate()
-
 GET			/auth/fenix					controllers.Application.signIn()
 GET			/auth/fenix/callback		controllers.Application.callback()
+GET			/logout						controllers.Application.logout()
 
-# Register
-
-GET			/register					controllers.Application.register()
 
 # Users          
 GET			/users/:username			controllers.UserController.user(username : String)
 GET			/users						controllers.UserController.users()
-POST		/users						controllers.UserController.newUser()
 POST		/users/:username/delete		controllers.UserController.deleteUser(username: String)
 
 # Apps

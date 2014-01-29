@@ -12,11 +12,11 @@ import play.db.ebean.Model;
 @Entity
 public class User extends Model {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     public String username;
-    
+
     public String name;
     public String email;
 
@@ -35,16 +35,22 @@ public class User extends Model {
 
     public static void deleteUser(String username) {
         User user = get(username);
-        user.removeAllAplications();
+        for (App app : user.applications) {
+            app.authors.remove(user);
+            app.update();
+        }
         user.delete();
     }
 
-    public void removeApplication(Long id) {
-      applications.remove(App.get(id));
+    public static void create(User user) {
+        user.save();
     }
 
-    public void removeAllAplications() {
-      applications.clear();
+    public static void removeApp(User user, App app) {
+        app.authors.remove(user);
+        app.update();
+        user.applications.remove(app);
+        user.update();
     }
 
 }
