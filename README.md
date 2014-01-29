@@ -19,6 +19,12 @@ Each app has a description, comments and vote.
     `db.default.url="jdbc:mysql://<db-server>/<db-name>"`    
     `db.default.user=<username>`    
     `db.default.password=<password>`    
+4. Create a file named `configuration.properties` and specify both your Consumer Key and Secret
+    `fenixedu.oauth.consumer.key=<your-consumer-key>`
+    `fenixedu.oauth.consumer.secret=<your-consumer-secret>`
+    `fenixedu.callback.url=<your-application-callback-url>`
+    `fenixedu.base.url=<fenixedu-installation-base-url>`
+   Put this file in `conf/` folder.
 
 ##Run
 To run the application type in terminal

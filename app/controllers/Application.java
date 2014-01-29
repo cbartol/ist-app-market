@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import pt.ist.fenixedu.sdk.FenixEduClient;
 import pt.ist.fenixedu.sdk.FenixEduClientFactory;
+import pt.ist.fenixedu.sdk.exception.FenixEduClientException;
 
 import com.google.gson.JsonObject;
 
@@ -29,15 +30,28 @@ public class Application extends Controller {
     }
 
     public static Result signIn() {
-        FenixEduClient client = FenixEduClientFactory.getSingleton();
-        return redirect(client.getAuthenticationUrl());
+        String url = "";
+        try {
+            FenixEduClient client = FenixEduClientFactory.getSingleton();
+            url = client.getAuthenticationUrl();
+        } catch (FenixEduClientException e) {
+            e.printStackTrace();
+            return badRequest();
+        }
+        return redirect(url);
     }
 
     public static Result callback() {
         String code = request().getQueryString("code");
-        FenixEduClient client = FenixEduClientFactory.getSingleton();
-        client.setCode(code);
-        JsonObject obj = client.getPerson();
+        JsonObject obj;
+        try {
+            FenixEduClient client = FenixEduClientFactory.getSingleton();
+            client.setCode(code);
+            obj = client.getPerson();
+        } catch (FenixEduClientException e) {
+            e.printStackTrace();
+            return badRequest();
+        }
         String username = obj.get("username").getAsString();
         User user = User.get(username);
 

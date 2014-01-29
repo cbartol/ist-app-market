@@ -6,10 +6,12 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import play.db.ebean.Model;
 
-@Entity
+@Entity()
+@Table(name = "fenix_user")
 public class User extends Model {
 
     private static final long serialVersionUID = 1L;

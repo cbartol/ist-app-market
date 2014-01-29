@@ -3,8 +3,9 @@ name := "ist-app-market"
 version := "1.1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "org.fenixedu" % "fenixedu-sdk" % "1.0.1",
+  "org.fenixedu" % "fenixedu-sdk-core" % "2.0.0",
   "mysql" % "mysql-connector-java" % "5.1.18",
+  "com.sun.jersey" % "jersey-core" % "1.17.1",
   javaJdbc,
   javaEbean,
   cache

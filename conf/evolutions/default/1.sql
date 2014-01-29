@@ -4,53 +4,57 @@
 # --- !Ups
 
 create table app (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   name                      varchar(255),
   description               varchar(255),
   constraint pk_app primary key (id))
 ;
 
-create table user (
+create table fenix_user (
   username                  varchar(255) not null,
   name                      varchar(255),
   email                     varchar(255),
-  constraint pk_user primary key (username))
+  constraint pk_fenix_user primary key (username))
 ;
 
 
-create table app_user (
+create table app_fenix_user (
   app_id                         bigint not null,
-  user_username                  varchar(255) not null,
-  constraint pk_app_user primary key (app_id, user_username))
+  fenix_user_username            varchar(255) not null,
+  constraint pk_app_fenix_user primary key (app_id, fenix_user_username))
 ;
 
-create table user_app (
-  user_username                  varchar(255) not null,
+create table fenix_user_app (
+  fenix_user_username            varchar(255) not null,
   app_id                         bigint not null,
-  constraint pk_user_app primary key (user_username, app_id))
+  constraint pk_fenix_user_app primary key (fenix_user_username, app_id))
 ;
+create sequence app_seq;
+
+create sequence fenix_user_seq;
 
 
 
-alter table app_user add constraint fk_app_user_app_01 foreign key (app_id) references app (id) on delete restrict on update restrict;
 
-alter table app_user add constraint fk_app_user_user_02 foreign key (user_username) references user (username) on delete restrict on update restrict;
+alter table app_fenix_user add constraint fk_app_fenix_user_app_01 foreign key (app_id) references app (id);
 
-alter table user_app add constraint fk_user_app_user_01 foreign key (user_username) references user (username) on delete restrict on update restrict;
+alter table app_fenix_user add constraint fk_app_fenix_user_fenix_user_02 foreign key (fenix_user_username) references fenix_user (username);
 
-alter table user_app add constraint fk_user_app_app_02 foreign key (app_id) references app (id) on delete restrict on update restrict;
+alter table fenix_user_app add constraint fk_fenix_user_app_fenix_user_01 foreign key (fenix_user_username) references fenix_user (username);
+
+alter table fenix_user_app add constraint fk_fenix_user_app_app_02 foreign key (app_id) references app (id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+drop table if exists app cascade;
 
-drop table app;
+drop table if exists app_fenix_user cascade;
 
-drop table app_user;
+drop table if exists fenix_user cascade;
 
-drop table user;
+drop table if exists fenix_user_app cascade;
 
-drop table user_app;
+drop sequence if exists app_seq;
 
-SET FOREIGN_KEY_CHECKS=1;
+drop sequence if exists fenix_user_seq;
 
