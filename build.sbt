@@ -1,6 +1,6 @@
 name := "ist-app-market"
 
-version := "1.1.0-SNAPSHOT"
+version := "1.1.0-alpha"
 
 libraryDependencies ++= Seq(
   "org.fenixedu" % "fenixedu-sdk-core" % "2.0.0",
