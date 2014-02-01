@@ -23,6 +23,7 @@
 			@if(session.contains("username")) {
 				<span class="user"> 
 					<a href="@routes.UserController.user(session.get("username"))">@session.get("username")</a>
+					|
 					<a href="@routes.Application.logout">Logout</a>
 				</span> 
 			} 

@@ -16,17 +16,22 @@ GET			/logout						controllers.Application.logout()
 
 # Users          
 GET			/user/:username				controllers.UserController.user(username : String)
-GET			/users						controllers.UserController.users()
+
+# not beeing used
 POST		/user/:username/delete		controllers.UserController.deleteUser(username: String)
+# ------
 
 # Apps
 
-GET			/apps						controllers.AppController.apps()
 GET			/app/:id					controllers.AppController.app(id: Long)
 GET			/user/:username/apps		controllers.AppController.userApps(username: String)
 GET			/new/app					controllers.AppController.newApplication()
 POST		/new/app					controllers.AppController.newApp()
-POST		/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
+GET			/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
+
+# not beeing used
+GET			/apps						controllers.AppController.apps()
+# ------
 
 # Map static resources from the /public folder to the /assets URL path
 

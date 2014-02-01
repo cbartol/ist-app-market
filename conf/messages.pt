@@ -1,19 +1,25 @@
-label.app.description.title=Descrição
-label.app.authors.title=Autores
-button.delete=Apagar
-label.sign.in.title=Entrar com a FenixEdu
-button.login=Login
-label.apps.title=Todas as Apps
-label.create.app.title=Criar nova App
 button.create=Criar
-label.user.apps.title={0} aplicações registadas
-label.welcome.message.title=Bem-vindo ao Marketplace
-label.create.user.title=Criar novo utilizador
-input.username=Username
-label.logout.message=Terminou a sessão
+button.delete=Apagar
+button.login=Login
+
+error.required=Campo obrigatório
+
+label.app.authors.title=Autores
+label.app.description.title=Descrição
+label.app.edit=Editar App
 
 label.apps=Aplicações
 label.apps.create=Criar aplicação
 label.apps.new=Nova aplicação
+label.apps.title=Todas as Apps
 
-error.required=Campo obrigatório
+label.create.app.title=Criar nova App
+label.create.user.title=Criar novo utilizador
+
+label.logout.message=Terminou a sessão
+
+label.sign.in.title=Entrar com a FenixEdu
+label.user.apps.title={0} aplicações registadas
+label.user.edit.profile=Editar Perfil
+
+label.welcome.message.title=Bem-vindo ao Marketplace

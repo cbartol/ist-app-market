@@ -1,9 +1,9 @@
-@(apps: TreeSet[App]) 
+@(apps: List[App]) 
 @import helper._
 
 
 <ul class="apps-list">
-	@for(app <- apps.toSeq){	
+	@for(app <- apps){	
 		<li class="three columns">
 			<div class="app-image"></div>
 			<a href="@routes.AppController.app(app.id)">@app.name</a>

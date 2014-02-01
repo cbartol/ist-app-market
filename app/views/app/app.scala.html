@@ -1,7 +1,9 @@
-@(app: App) 
+@(app: App)(privateSection: Html)
 @import helper._ 
 
 @main(s"Apps | ${app.name}") {
+
+	@privateSection
 
 	<section>
 		<div class="container">

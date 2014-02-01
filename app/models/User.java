@@ -1,9 +1,10 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -59,9 +60,15 @@ public class User extends Model {
         user.update();
     }
 
-    public TreeSet<App> getApplications(Comparator<App> comparator) {
-        TreeSet<App> result = new TreeSet<App>(comparator);
+    public List<App> getApplications(Comparator<App> comparator) {
+        List<App> result = new ArrayList<App>();
         result.addAll(applications);
+        Collections.sort(result, comparator);
         return result;
+    }
+
+    public List<App> getApplications(Comparator<App> comparator, int maxCount) {
+        List<App> allUserApps = getApplications(comparator);
+        return allUserApps.subList(0, Math.min(allUserApps.size(), maxCount));
     }
 }

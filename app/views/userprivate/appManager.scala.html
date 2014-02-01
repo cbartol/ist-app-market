@@ -1,0 +1,13 @@
+@(application: App) 
+@import helper._ 
+
+@app.app(application) {
+
+	<section>
+		<div class="container">
+			<a class="button">@Messages("label.app.edit")</a>
+			<a href="@routes.AppController.deleteApp(application.id)" class="button">@Messages("button.delete")</a>
+		</div>
+	</section>
+
+}

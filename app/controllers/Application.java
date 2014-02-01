@@ -93,6 +93,14 @@ public class Application extends Controller {
         }
     }
 
+    public static String getCurrentUsername() {
+        String username = session("username");
+        if (username == null) {
+            username = "";
+        }
+        return username;
+    }
+
     /**
      * Returns a FenixEduClient with the current user credentials.
      * If it returns null the user must be redirected to the login page

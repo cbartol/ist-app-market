@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,8 +12,6 @@ import javax.persistence.ManyToMany;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-
-import com.google.common.collect.Sets;
 
 @Entity
 public class App extends Model implements Comparable<App> {
@@ -34,11 +31,15 @@ public class App extends Model implements Comparable<App> {
 
     private Date creationDate;
 
+    /**
+     * Date comparator to sort apps
+     * from the newest to the oldest
+     */
     public static final Comparator<App> DATE_COMPARATOR = new Comparator<App>() {
 
         @Override
         public int compare(App o1, App o2) {
-            return o1.getCreationDate().compareTo(o2.getCreationDate());
+            return o2.getCreationDate().compareTo(o1.getCreationDate());
         }
     };
 
@@ -55,12 +56,12 @@ public class App extends Model implements Comparable<App> {
     }
 
     public static App get(Long id) {
-        return find.byId(id);
+        return (id != null) ? find.byId(id) : null;
     }
 
-    public static TreeSet<App> search(String query) {
+    public static List<App> search(String query) {
         //TODO
-        return Sets.newTreeSet(all());
+        return all();
     }
 
     public static void removeAuthor(App app, User user) {
@@ -75,6 +76,8 @@ public class App extends Model implements Comparable<App> {
             user.applications.remove(app);
             user.update();
         }
+        app.authors.clear();
+        app.update();
         app.delete();
     }
 

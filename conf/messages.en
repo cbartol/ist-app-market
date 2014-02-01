@@ -1,19 +1,25 @@
-label.app.description.title=Description
-label.app.authors.title=Authors
-button.delete=Delete
-label.sign.in.title=Sign in with FenixEdu
-button.login=Login
-label.apps.title=All Apps
-label.create.app.title=Create a new App
 button.create=Create
-label.user.apps.title={0} apps registered
-label.welcome.message.title=Welcome to Marketplace
-label.create.user.title=Create a new user
-input.username=Username
-label.logout.message=You''ve been logged out
+button.delete=Delete
+button.login=Login
+
+error.required=This field is required
+
+label.app.authors.title=Authors
+label.app.description.title=Description
+label.app.edit=Edit App
 
 label.apps=Apps
 label.apps.create=Create app
 label.apps.new=New app
+label.apps.title=All Apps
 
-error.required=This field is required
+label.create.app.title=Create a new App
+label.create.user.title=Create a new user
+
+label.logout.message=You''ve been logged out
+
+label.sign.in.title=Sign in with FenixEdu
+label.user.apps.title={0} apps registered
+label.user.edit.profile=Edit Profile
+
+label.welcome.message.title=Welcome to Marketplace

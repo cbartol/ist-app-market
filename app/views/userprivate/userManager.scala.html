@@ -1,24 +1,12 @@
-@(users: List[User], userForm: Form[User])
-
+@(user: User)
 @import helper._
 
-@main("Users Admin") {
-    
-    <h1>@users.size() user(s)</h1>
-    
-    <ul>
-        @for(user <- users) {
-            <li>
-                
-                <div>@user.username<div>
-                
-                <a href="@routes.AppController.userApps(user.username)">Apps</a>
-                
-                @form(routes.UserController.deleteUser(user.username)) {
-                    <input type="submit" value="@Messages("button.delete")">
-                }
-            </li>
-        }
-    </ul>
+@usercommon.user(user) {
+	<section>
+		<div class="container">
+			<a class="button">@Messages("label.user.edit.profile")</a>
+			<a href="@routes.AppController.newApplication" class="button">@Messages("label.apps.create")</a>
+		</div>
+	</section>
     
 }
