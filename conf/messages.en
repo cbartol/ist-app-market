@@ -15,3 +15,5 @@ label.logout.message=You''ve been logged out
 label.apps=Apps
 label.apps.create=Create app
 label.apps.new=New app
+
+error.required=This field is required

@@ -28,7 +28,7 @@
 			} 
 				
 			@if(!session.contains("username")) { 
-				<a href="@routes.Application.signIn" class="button">@Messages("label.sign.in.title")</a>
+				<a href="@routes.Application.signIn(request.uri)" class="button">@Messages("label.sign.in.title")</a>
 			}
 				<p>
 					<a href="@routes.Application.changeLang("pt",request.uri)">pt</a>

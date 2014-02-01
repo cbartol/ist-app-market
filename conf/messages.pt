@@ -15,3 +15,5 @@ label.logout.message=Terminou a sessão
 label.apps=Aplicações
 label.apps.create=Criar aplicação
 label.apps.new=Nova aplicação
+
+error.required=Campo obrigatório

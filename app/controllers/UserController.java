@@ -9,16 +9,22 @@ public class UserController extends Controller {
     static Form<User> UserForm = Form.form(User.class);
 
     public static Result user(String username) {
-        //return redirect(routes.AppController.userApps(username));
-        return ok(views.html.user.render(User.get(username)));
+        User user = User.get(username);
+        if (user != null) {
+            return ok(views.html.usercommon.user.render(user));
+        }
+        return redirect(routes.Application.index());
     }
 
     public static Result users() {
-        return ok(views.html.usersManager.render(User.all(), UserForm));
+        return ok(views.html.userprivate.userManager.render(User.all(), UserForm));
     }
 
     public static Result deleteUser(String username) {
-        User.deleteUser(username);
+        if (session("username").equals(username)) {
+            User.deleteUser(username);
+            return redirect(routes.Application.logout());
+        }
         return redirect(routes.UserController.users());
     }
 

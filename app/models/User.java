@@ -1,7 +1,9 @@
 package models;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,7 +34,7 @@ public class User extends Model {
     }
 
     public static User get(String username) {
-        return find.byId(username);
+        return (username != null) ? find.byId(username) : null;
     }
 
     public static void deleteUser(String username) {
@@ -41,6 +43,8 @@ public class User extends Model {
             app.authors.remove(user);
             app.update();
         }
+        user.applications.clear();
+        user.update();
         user.delete();
     }
 
@@ -55,4 +59,9 @@ public class User extends Model {
         user.update();
     }
 
+    public TreeSet<App> getApplications(Comparator<App> comparator) {
+        TreeSet<App> result = new TreeSet<App>(comparator);
+        result.addAll(applications);
+        return result;
+    }
 }

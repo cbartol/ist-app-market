@@ -9,23 +9,23 @@ GET			/language					controllers.Application.changeLang(lang: String, url: String
 
 # Login
 
-GET			/auth/fenix					controllers.Application.signIn()
+GET			/auth/fenix					controllers.Application.signIn(url: String)
 GET			/auth/fenix/callback		controllers.Application.callback()
 GET			/logout						controllers.Application.logout()
 
 
 # Users          
-GET			/users/:username			controllers.UserController.user(username : String)
+GET			/user/:username				controllers.UserController.user(username : String)
 GET			/users						controllers.UserController.users()
-POST		/users/:username/delete		controllers.UserController.deleteUser(username: String)
+POST		/user/:username/delete		controllers.UserController.deleteUser(username: String)
 
 # Apps
 
 GET			/apps						controllers.AppController.apps()
-GET			/apps/:id					controllers.AppController.app(id: Long)
-GET			/users/:username/apps		controllers.AppController.userApps(username: String)
-GET			/users/:username/apps/new	controllers.AppController.newApplication(username: String)
-POST		/users/app					controllers.AppController.newApp()
+GET			/app/:id					controllers.AppController.app(id: Long)
+GET			/user/:username/apps		controllers.AppController.userApps(username: String)
+GET			/new/app					controllers.AppController.newApplication()
+POST		/new/app					controllers.AppController.newApp()
 POST		/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path

@@ -15,7 +15,7 @@
 	<section>
 		<div class="container">
 			<h2 class="sixteen columns">@Messages("label.apps")</h2>
-			@apps(user.applications)
+			@app.apps(user.getApplications(App.DATE_COMPARATOR))
 			<a class="sixteen columns text-right" href="@routes.AppController.userApps(user.username)">All apps</a>
 		</div>
 	</section>
