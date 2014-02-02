@@ -57,7 +57,8 @@ public class App extends Model implements Comparable<App> {
     }
 
     public static List<App> getNewest(int amount) {
-        return all(DATE_COMPARATOR).subList(0, amount);
+        List<App> result = all(DATE_COMPARATOR);
+        return result.subList(0, Math.min(result.size(), amount));
     }
 
     public static App get(Long id) {
