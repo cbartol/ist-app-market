@@ -5,7 +5,9 @@
 # Home page
 
 GET			/							controllers.Application.index()
+POST		/							controllers.Application.search()
 GET			/language					controllers.Application.changeLang(lang: String, url: String)
+
 
 # Login
 
@@ -29,9 +31,6 @@ GET			/new/app					controllers.AppController.newApplication()
 POST		/new/app					controllers.AppController.newApp()
 GET			/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
 
-# not beeing used
-GET			/apps						controllers.AppController.apps()
-# ------
 
 # Map static resources from the /public folder to the /assets URL path
 

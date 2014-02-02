@@ -1,0 +1,26 @@
+@(appList: List[App], userList: List[User], query: String)
+
+@smallName(name: String) = @{
+	val arr = name.split(" ")
+	arr.head + " " + arr.last
+}
+
+@index() {
+    <div class="container">
+		<h2>@Messages("label.search.result", query)</h2>
+		<ul class="apps-list">
+			@for(app <- appList) {
+				<li class="three columns">
+					<div class="app-image"></div>
+					<a href="@routes.AppController.app(app.id)">@app.name</a>
+				</li>
+			}
+			@for(user <- userList) {
+				<li class="three columns">
+					<div class="app-image"></div>
+					<a href="@routes.UserController.user(user.username)">@user.getSmallName()</a>
+				</li>
+			}
+		</ul>
+    </div>
+}

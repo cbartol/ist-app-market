@@ -10,10 +10,6 @@ import play.mvc.Result;
 public class AppController extends Controller {
     static Form<App> AppForm = Form.form(App.class);
 
-    public static Result apps() {
-        return ok(views.html.app.apps.render(App.all()));
-    }
-
     public static Result userApps(String username) {
         return ok(views.html.usercommon.userApps.render(User.get(username)));
     }
@@ -54,14 +50,12 @@ public class AppController extends Controller {
 
     public static Result app(Long id) {
         App app = App.get(id);
-        if (app != null && app.authors.contains(User.get(Application.getCurrentUsername()))) {
+        if (app == null) {
+            return redirect(routes.Application.index());
+        } else if (app.authors.contains(User.get(Application.getCurrentUsername()))) {
             return ok(views.html.userprivate.appManager.render(App.get(id)));
         } else {
             return ok(views.html.app.app.render(App.get(id), Html.empty()));
         }
-    }
-
-    public static Result search(String query) {
-        return ok(views.html.app.apps.render(App.search(query)));
     }
 }

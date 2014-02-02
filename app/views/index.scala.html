@@ -1,0 +1,26 @@
+@()(result: Html)
+
+@import helper._
+
+@main("Marketplace") {
+	@if(result == null){
+	    <section class="jumbotron">
+	    	<div class="container">
+	    		<h1>@Messages("label.welcome.message.title")</h1>
+	    	</div>
+	    </section>
+	    
+	    @if(flash.contains("success")) {
+	    <p class="success">
+	        @flash.get("success")
+	    </p>
+	    } else {
+		    <div class="container">
+	    		<h2>@Messages("label.newest.apps")</h2>
+		    	@app.apps(App.getNewest(5))
+		    </div>
+	    }
+	} else {
+		@result
+    }
+}

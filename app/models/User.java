@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import play.db.ebean.Model;
+import play.db.ebean.Transactional;
+
+import com.google.common.collect.Lists;
 
 @Entity()
 @Table(name = "fenix_user")
@@ -38,6 +41,13 @@ public class User extends Model {
         return (username != null) ? find.byId(username) : null;
     }
 
+    public static List<User> search(String query) {
+        Set<User> result = find.where().ilike("username", '%' + query).findSet();
+        result.addAll(find.where().ilike("name", '%' + query.replace(' ', '%') + '%').findSet());
+        return Lists.newArrayList(result);
+    }
+
+    @Transactional
     public static void deleteUser(String username) {
         User user = get(username);
         for (App app : user.applications) {
@@ -53,6 +63,7 @@ public class User extends Model {
         user.save();
     }
 
+    @Transactional
     public static void removeApp(User user, App app) {
         app.authors.remove(user);
         app.update();
@@ -70,5 +81,14 @@ public class User extends Model {
     public List<App> getApplications(Comparator<App> comparator, int maxCount) {
         List<App> allUserApps = getApplications(comparator);
         return allUserApps.subList(0, Math.min(allUserApps.size(), maxCount));
+    }
+
+    public String getSmallName() {
+        String[] arr = name.split(" ");
+        if (arr.length > 1) {
+            return arr[0] + " " + arr[arr.length - 1];
+        } else {
+            return name;
+        }
     }
 }

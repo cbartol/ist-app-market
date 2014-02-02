@@ -19,6 +19,14 @@
 				<a href="@routes.Application.index" id="logo"></a>
 			</div>
 
+			@{
+				var searchForm = Form.form(classOf[Search])
+				helper.form(action = routes.Application.search) {
+				    <input type="submit" hidden="true"/>
+				    helper.inputText(searchForm("query"), 'type -> "search", '_label -> "")
+				}
+			}
+
 			<nav class="eight columns">
 			@if(session.contains("username")) {
 				<span class="user"> 
@@ -32,8 +40,8 @@
 				<a href="@routes.Application.signIn(request.uri)" class="button">@Messages("label.sign.in.title")</a>
 			}
 				<p>
-					<a href="@routes.Application.changeLang("pt",request.uri)">pt</a>
-					<a href="@routes.Application.changeLang("en",request.uri)">en</a>
+					<a href="@routes.Application.changeLang("pt",request.uri)"><img src="http://u8.8u.cz/images/flags/pt.png" alt="pt"/></a>
+					<a href="@routes.Application.changeLang("en",request.uri)"><img src="http://u8.8u.cz/images/flags/gb.png" alt="en"/></a>
 				</p>
 			</nav>
 

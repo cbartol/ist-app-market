@@ -18,6 +18,8 @@ label.create.user.title=Create a new user
 
 label.logout.message=You''ve been logged out
 
+label.newest.apps=Newest Apps
+label.search.result=Search result for "{0}"
 label.sign.in.title=Sign in with FenixEdu
 label.user.apps.title={0} apps registered
 label.user.edit.profile=Edit Profile

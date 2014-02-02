@@ -18,6 +18,8 @@ label.create.user.title=Criar novo utilizador
 
 label.logout.message=Terminou a sessão
 
+label.newest.apps=Aplicações recentes
+label.search.result=Resultado da procura "{0}"
 label.sign.in.title=Entrar com a FenixEdu
 label.user.apps.title={0} aplicações registadas
 label.user.edit.profile=Editar Perfil

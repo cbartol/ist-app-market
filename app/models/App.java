@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import play.db.ebean.Transactional;
 
 @Entity
 public class App extends Model implements Comparable<App> {
@@ -55,15 +56,19 @@ public class App extends Model implements Comparable<App> {
         return result;
     }
 
+    public static List<App> getNewest(int amount) {
+        return all(DATE_COMPARATOR).subList(0, amount);
+    }
+
     public static App get(Long id) {
         return (id != null) ? find.byId(id) : null;
     }
 
     public static List<App> search(String query) {
-        //TODO
-        return all();
+        return find.where().ilike("name", "%" + query + "%").findList();
     }
 
+    @Transactional
     public static void removeAuthor(App app, User user) {
         user.applications.remove(app);
         user.update();
@@ -71,6 +76,7 @@ public class App extends Model implements Comparable<App> {
         app.update();
     }
 
+    @Transactional
     public static void deleteApp(App app) {
         for (User user : app.authors) {
             user.applications.remove(app);
@@ -81,6 +87,7 @@ public class App extends Model implements Comparable<App> {
         app.delete();
     }
 
+    @Transactional
     public static void create(App app, User user) {
         app.authors.add(user);
         app.creationDate = new Date();

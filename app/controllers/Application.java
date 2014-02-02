@@ -3,6 +3,8 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.App;
+import models.Search;
 import models.User;
 import play.data.Form;
 import play.i18n.Messages;
@@ -18,8 +20,7 @@ import com.google.gson.JsonObject;
 public class Application extends Controller {
 
     public static Result index() {
-
-        return ok(views.html.home.index.render(Form.form(User.class)));
+        return ok(views.html.index.render(null));
     }
 
     public static Result logout() {
@@ -91,6 +92,20 @@ public class Application extends Controller {
         } else {
             return redirect(routes.AppController.userApps(user.username));
         }
+    }
+
+    public static Result search() {
+        Form<Search> filledForm = Form.form(Search.class).bindFromRequest();
+        String originalQuery = filledForm.get().query;
+        if (originalQuery.replace(" ", "").isEmpty()) {
+            return redirect(routes.Application.index());
+        }
+        String query = originalQuery.replace("_", "\\_").replace("%", "\\%");
+        //avoiding trolls
+        if (originalQuery.length() > 40) {
+            originalQuery = originalQuery.substring(0, 40) + "...";
+        }
+        return ok(views.html.searchResult.render(App.search(query), User.search(query), originalQuery));
     }
 
     public static String getCurrentUsername() {

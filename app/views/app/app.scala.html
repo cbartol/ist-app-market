@@ -20,7 +20,7 @@
 				<h3>@Messages("label.app.authors.title")</h3>
 			
 				<ul> @app.authors.map { user =>
-						<li>@user.username</li>
+						<li><a href="@routes.UserController.user(user.username)">@user.getSmallName()</a></li>
 			        }
 			    </ul>
 			</article>
