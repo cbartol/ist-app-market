@@ -26,11 +26,11 @@ POST		/user/:username/delete		controllers.UserController.deleteUser(username: St
 # Apps
 
 GET			/app/:id					controllers.AppController.app(id: Long)
+GET			/app/:id/image				controllers.AppController.getLogo(id: Long)
 GET			/user/:username/apps		controllers.AppController.userApps(username: String)
 GET			/new/app					controllers.AppController.newApplication()
 POST		/new/app					controllers.AppController.newApp()
 GET			/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
-
 
 # Map static resources from the /public folder to the /assets URL path
 

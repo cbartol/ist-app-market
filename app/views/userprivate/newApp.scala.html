@@ -5,10 +5,23 @@
 
 	<section>
 		<div class="container">
+			 @if(flash.contains("error")) {
+			    <p class="error">
+			        @flash.get("error")
+			    </p>
+		    }
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
 			<h1>@Messages("label.apps.new")</h1>
-			@helper.form(action = routes.AppController.newApp) {
-	    		@helper.inputText(appForm("name"), 'placeholder -> "Application Name", '_label -> "")
-	    		@helper.inputText(appForm("description"), 'placeholder -> "Small Description", '_label -> "")
+			@helper.form(action = routes.AppController.newApp , 'enctype -> "multipart/form-data") {
+	    		@helper.inputText(appForm("name"), 'placeholder -> "Application Name", 'maxlength -> "30", '_label -> "")
+				@helper.textarea(appForm("description"), 'style -> "margin: 2px; width: 550px; height: 120px;", 'placeholder -> "Small Description", '_label -> "")
+	    		<p>App Logo: </p>
+	    		<input type="hidden" name="MAX_FILE_SIZE" value="@App.MAX_IMAGE_SIZE" /> 
+	    		<input type="file" name="app.logo" accept="image/png"><br/>
 	     		<input class="button" type="submit" value="@Messages("button.create")">
     		}
 		</div>

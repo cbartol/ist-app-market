@@ -25,6 +25,7 @@ Each app has a description, comments and vote.
     `fenixedu.callback.url=<your-application-callback-url>`
     `fenixedu.base.url=<fenixedu-installation-base-url>`
    Put this file in `conf/` folder.
+5. Create a folder named `file-storage`. This folder will be used to store all uploaded files.
 
 ##Run
 To run the application type in terminal

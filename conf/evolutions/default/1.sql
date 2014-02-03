@@ -7,6 +7,7 @@ create table app (
   id                        bigint not null,
   name                      varchar(255),
   description               varchar(255),
+  file_logo                 varchar(255),
   creation_date             timestamp,
   constraint pk_app primary key (id))
 ;

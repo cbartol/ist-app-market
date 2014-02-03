@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -17,7 +18,9 @@ import play.db.ebean.Transactional;
 @Entity
 public class App extends Model implements Comparable<App> {
 
+    private static final String STORE_FOLDER = "file-storage";
     private static final long serialVersionUID = 1L;
+    public static final long MAX_IMAGE_SIZE = 2097152;
 
     @Id
     public Long id;
@@ -29,6 +32,8 @@ public class App extends Model implements Comparable<App> {
     public Set<User> authors;
 
     public String description;
+
+    public String fileLogo;
 
     private Date creationDate;
 
@@ -84,21 +89,31 @@ public class App extends Model implements Comparable<App> {
             user.update();
         }
         app.authors.clear();
+        new File(STORE_FOLDER, app.fileLogo).delete();
         app.update();
         app.delete();
     }
 
     @Transactional
-    public static void create(App app, User user) {
+    public static void create(App app, File appLogo, User user) {
         app.authors.add(user);
         app.creationDate = new Date();
         app.save();
+        String fileName = app.id + ".png";
+        File destFile = new File(STORE_FOLDER, fileName);
+        appLogo.renameTo(destFile);
+        app.fileLogo = destFile.getName();
+        app.update();
         user.applications.add(app);
         user.update();
     }
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public File getLogo() {
+        return new File(STORE_FOLDER, this.fileLogo);
     }
 
     @Override

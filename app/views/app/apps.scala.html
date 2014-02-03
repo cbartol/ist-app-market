@@ -5,7 +5,7 @@
 <ul class="apps-list">
 	@for(app <- apps){	
 		<li class="three columns">
-			<div class="app-image"></div>
+			<a href="@routes.AppController.app(app.id)"><img class="app-image" src="@routes.AppController.getLogo(app.id)" /></a>
 			<a href="@routes.AppController.app(app.id)">@app.name</a>
 		</li> 
 	}

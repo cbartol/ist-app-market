@@ -26,3 +26,6 @@ application.conf
 conf/application.conf
 conf/fenixedu.config
 conf/configuration.properties
+
+# file storage
+file-storage/*

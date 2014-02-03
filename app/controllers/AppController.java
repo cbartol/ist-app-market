@@ -1,10 +1,14 @@
 package controllers;
 
+import java.io.File;
+import java.text.DecimalFormat;
+
 import models.App;
 import models.User;
 import play.api.templates.Html;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 
 public class AppController extends Controller {
@@ -26,17 +30,21 @@ public class AppController extends Controller {
     }
 
     public static Result newApp() {
-        String currentUser = Application.getCurrentUsername();
-        if (currentUser.isEmpty()) {
+        String currentUsername = Application.getCurrentUsername();
+        if (currentUsername.isEmpty()) {
             return badRequest();
         }
         Form<App> filledForm = AppForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            return badRequest(views.html.userprivate.newApp.render(User.get(currentUser), filledForm.bindFromRequest()));
+            return badRequest(views.html.userprivate.newApp.render(User.get(currentUsername), filledForm.bindFromRequest()));
         } else {
             App app = filledForm.get();
-            App.create(app, User.get(Application.getCurrentUsername()));
-            return redirect(routes.UserController.user(currentUser));
+            File file = getAppLogoFromRequest();
+            if (file == null) {
+                return badRequest(views.html.userprivate.newApp.render(User.get(currentUsername), filledForm.bindFromRequest()));
+            }
+            App.create(app, file, User.get(Application.getCurrentUsername()));
+            return redirect(routes.UserController.user(currentUsername));
         }
     }
 
@@ -57,5 +65,38 @@ public class AppController extends Controller {
         } else {
             return ok(views.html.app.app.render(App.get(id), Html.empty()));
         }
+    }
+
+    private static File getAppLogoFromRequest() {
+        FilePart filePart = request().body().asMultipartFormData().getFile("app.logo");
+        if (filePart == null) {
+            flash("error", "No picture for upload");
+            return null;
+        }
+        String contentType = filePart.getContentType();
+        if (!contentType.contains("image/png")) {
+            flash("error", "Invalid file type (must be '.png')");
+            return null;
+        }
+        File file = filePart.getFile();
+        if (file.length() > App.MAX_IMAGE_SIZE) {
+            flash("error", "File too large (max: " + readableFileSize(App.MAX_IMAGE_SIZE) + ")");
+            return null;
+        }
+        return file;
+    }
+
+    public static Result getLogo(long id) {
+        final App app = App.get(id);
+        return ok(app.getLogo());
+    }
+
+    public static String readableFileSize(long size) {
+        if (size <= 0) {
+            return "0";
+        }
+        final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 }
