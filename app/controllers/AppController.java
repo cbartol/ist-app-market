@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 import models.App;
+import models.Comment;
 import models.User;
 import play.api.templates.Html;
 import play.data.Form;
@@ -25,6 +26,7 @@ public class AppController extends Controller {
             App.deleteApp(app);
         } else {
             //Don't have permissions
+            return unauthorized();
         }
         return redirect(routes.UserController.user(currentUser));
     }
@@ -32,7 +34,7 @@ public class AppController extends Controller {
     public static Result newApp() {
         String currentUsername = Application.getCurrentUsername();
         if (currentUsername.isEmpty()) {
-            return badRequest();
+            return unauthorized();
         }
         Form<App> filledForm = AppForm.bindFromRequest();
         if (filledForm.hasErrors()) {
@@ -98,5 +100,28 @@ public class AppController extends Controller {
         final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
+
+    public static Result addComment(Long id) {
+        String currentUsername = Application.getCurrentUsername();
+        if (currentUsername.isEmpty()) {
+            return unauthorized();
+        }
+        Form<Comment> filledForm = Form.form(Comment.class).bindFromRequest();
+        if (filledForm.hasErrors()) {
+        } else {
+            Comment comment = filledForm.get();
+            Comment.create(comment, App.get(id), User.get(currentUsername));
+        }
+        return redirect(routes.AppController.app(id));
+    }
+
+    public static Result toggleLikeOnComment(Long commentId) {
+        String currentUsername = Application.getCurrentUsername();
+        Comment comment = Comment.get(commentId);
+        if (!currentUsername.isEmpty()) {
+            Comment.toggleLike(comment, User.get(currentUsername));
+        }
+        return redirect(routes.AppController.app(comment.getApp().id));
     }
 }

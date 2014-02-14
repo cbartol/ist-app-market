@@ -32,6 +32,10 @@ GET			/new/app					controllers.AppController.newApplication()
 POST		/new/app					controllers.AppController.newApp()
 GET			/apps/:id/delete			controllers.AppController.deleteApp(id: Long)
 
+# Comment
+POST		/app/:id/comment			controllers.AppController.addComment(id: Long)
+POST		/app/:commentId/like		controllers.AppController.toggleLikeOnComment(commentId: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 
 GET			/assets/*file				controllers.Assets.at(path="/public", file)

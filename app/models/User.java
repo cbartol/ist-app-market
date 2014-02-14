@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import play.db.ebean.Model;
@@ -31,6 +32,12 @@ public class User extends Model {
     @ManyToMany()
     public Set<App> applications;
 
+    @OneToMany(mappedBy = "author")
+    private Set<Comment> commentsMade;
+
+    @ManyToMany
+    private Set<Comment> likedComments;
+
     private static Finder<String, User> find = new Finder<String, User>(String.class, User.class);
 
     public static List<User> all() {
@@ -50,6 +57,18 @@ public class User extends Model {
     @Transactional
     public static void deleteUser(String username) {
         User user = get(username);
+        Set<Comment> commentsToDelete = user.getCommentsMade();
+        for (Comment comment : commentsToDelete) {
+            Comment.delete(comment);
+        }
+        user.update();
+        Set<Comment> commentsToUnlike = user.getLikedComments();
+        for (Comment comment : commentsToUnlike) {
+            comment.getLikedUsers().remove(user);
+            comment.update();
+        }
+        commentsToDelete.clear();
+        user.update();
         for (App app : user.applications) {
             app.authors.remove(user);
             app.update();
@@ -90,5 +109,17 @@ public class User extends Model {
         } else {
             return name;
         }
+    }
+
+    public void addCommentMade(Comment c) {
+        commentsMade.add(c);
+    }
+
+    public Set<Comment> getLikedComments() {
+        return likedComments;
+    }
+
+    public Set<Comment> getCommentsMade() {
+        return commentsMade;
     }
 }

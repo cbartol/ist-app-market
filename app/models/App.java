@@ -1,6 +1,7 @@
 package models;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -36,6 +38,9 @@ public class App extends Model implements Comparable<App> {
     public String fileLogo;
 
     private Date creationDate;
+
+    @OneToMany(mappedBy = "app")
+    private Set<Comment> comments;
 
     /**
      * Date comparator to sort apps
@@ -84,6 +89,10 @@ public class App extends Model implements Comparable<App> {
 
     @Transactional
     public static void deleteApp(App app) {
+        List<Comment> commentsToDelete = app.getComments();
+        for (Comment comment : commentsToDelete) {
+            Comment.delete(comment);
+        }
         for (User user : app.authors) {
             user.applications.remove(app);
             user.update();
@@ -108,12 +117,22 @@ public class App extends Model implements Comparable<App> {
         user.update();
     }
 
+    public void addComment(Comment c) {
+        comments.add(c);
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
 
     public File getLogo() {
         return new File(STORE_FOLDER, this.fileLogo);
+    }
+
+    public List<Comment> getComments() {
+        List<Comment> result = new ArrayList<Comment>();
+        result.addAll(comments);
+        return result;
     }
 
     @Override

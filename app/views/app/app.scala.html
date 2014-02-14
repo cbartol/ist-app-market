@@ -28,5 +28,38 @@
 		</div>
 	</section>
 	
+	<section>
+		<div class="container">
+			<h3 class="sixteen columns" style="margin-bottom: 20px;">Comments</h1>
 
+			<ul class="apps-list">
+				@for(comment <- app.getComments()){	
+					<li class="three columns">
+						@helper.form(action = routes.AppController.toggleLikeOnComment(comment.getId())) {
+							<input type="image" src="@routes.Assets.at("images/like.png")" alt="Submit" />
+						}
+						@comment.getLikes()
+						<div style="white-space: pre-wrap;">
+							@comment.getAuthor().getSmallName() says: <br/>
+							@comment.getText()
+						</div>
+					</li> 
+				}
+			</ul>
+		</div>
+	</section>
+	
+	<!-- Only users can comment -->
+	@if(session.contains("username")){
+		<section>
+			<div class="container">
+			@defining(Form.form(classOf[Comment])) { commentForm =>
+					@helper.form(action = routes.AppController.addComment(app.id)) {
+					    @helper.textarea(commentForm("text"), 'style -> "margin: 2px; width: 550px; height: 120px;", 'placeholder -> "Small Description", '_label -> "")
+			     		<input class="button" type="submit" value="Comment" />
+					}
+			}
+			</div>
+		</section>
+	}
 }
