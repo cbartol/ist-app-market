@@ -1,0 +1,10 @@
+@(app: App)
+
+<p>@app.getScore()</p>
+	<div>
+	    <a href="@routes.AppController.rate(app.id, 1)" >1</a>
+	    <a href="@routes.AppController.rate(app.id, 2)" >2</a>
+	    <a href="@routes.AppController.rate(app.id, 3)" >3</a>
+	    <a href="@routes.AppController.rate(app.id, 4)" >4</a>
+	    <a href="@routes.AppController.rate(app.id, 5)" >5</a>
+	</div>

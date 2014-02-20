@@ -6,6 +6,7 @@ import java.util.Map;
 import models.App;
 import models.Search;
 import models.User;
+import play.Routes;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -140,5 +141,11 @@ public class Application extends Controller {
             return null;
         }
         return client;
+    }
+
+    public static Result javascriptRoutes() {
+        response().setContentType("text/javascript");
+        return ok(Routes.javascriptRouter("myJsRoutes", routes.javascript.AppController.toggleLikeOnComment(),
+                routes.javascript.AppController.addComment()));
     }
 }

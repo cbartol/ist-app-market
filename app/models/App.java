@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Constraints.Required;
@@ -40,7 +41,32 @@ public class App extends Model implements Comparable<App> {
     private Date creationDate;
 
     @OneToMany(mappedBy = "app")
+    private Set<Voter> userRate;
+
+    private Double score;
+
+    @OneToMany(mappedBy = "app")
     private Set<Comment> comments;
+
+    @Entity
+    public class Voter extends Model {
+        private static final long serialVersionUID = 1L;
+
+        @Id
+        public Long id;
+
+        public String username;
+        public Short score;
+
+        @ManyToOne
+        public App app;
+
+        public Voter(String username, short score, App app) {
+            this.username = username;
+            this.score = score;
+            this.app = app;
+        }
+    }
 
     /**
      * Date comparator to sort apps
@@ -98,6 +124,10 @@ public class App extends Model implements Comparable<App> {
             user.update();
         }
         app.authors.clear();
+        for (Voter v : app.getUserRate()) {
+            v.delete();
+        }
+        app.getUserRate().clear();
         new File(STORE_FOLDER, app.fileLogo).delete();
         app.update();
         app.delete();
@@ -107,6 +137,7 @@ public class App extends Model implements Comparable<App> {
     public static void create(App app, File appLogo, User user) {
         app.authors.add(user);
         app.creationDate = new Date();
+        app.score = 0D;
         app.save();
         String fileName = app.id + ".png";
         File destFile = new File(STORE_FOLDER, fileName);
@@ -115,6 +146,29 @@ public class App extends Model implements Comparable<App> {
         app.update();
         user.applications.add(app);
         user.update();
+    }
+
+    @Transactional
+    public static void rate(App app, User user, short score) {
+        String username = user.username;
+        Voter voter = null;
+        for (Voter v : app.getUserRate()) {
+            if (v.app.id.equals(app.id) && v.username.equals(username)) {
+                voter = v;
+                break;
+            }
+        }
+        if (voter == null) {
+            voter = app.createVoter(username, score);
+            app.getUserRate().add(voter);
+            app.update();
+        } else {
+            voter.score = score;
+            voter.update();
+        }
+
+        app.reScore();
+        app.update();
     }
 
     public void addComment(Comment c) {
@@ -138,5 +192,28 @@ public class App extends Model implements Comparable<App> {
     @Override
     public int compareTo(App o) {
         return this.creationDate.compareTo(o.creationDate);
+    }
+
+    public Set<Voter> getUserRate() {
+        return userRate;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void reScore() {
+        Set<Voter> voters = this.getUserRate();
+        double newScore = 0;
+        for (Voter v : voters) {
+            newScore += v.score.doubleValue();
+        }
+        this.score = newScore / voters.size();
+    }
+
+    public Voter createVoter(String username, Short s) {
+        Voter v = new Voter(username, s, this);
+        v.save();
+        return v;
     }
 }

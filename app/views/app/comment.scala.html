@@ -1,0 +1,10 @@
+@(comment: Comment)
+
+<li id="comment_@comment.getId()" class="three columns">
+	<input onclick="toggleLikeComment(@comment.getId());" type="image" src="@routes.Assets.at("images/like.png")" alt="Submit" />
+	@comment.getLikes()
+	<div style="white-space: pre-wrap;">
+		@comment.getAuthor().getSmallName() says: <br/>
+		@comment.getText()
+	</div>
+</li>

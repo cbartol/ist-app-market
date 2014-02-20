@@ -9,6 +9,7 @@ create table app (
   description               varchar(255),
   file_logo                 varchar(255),
   creation_date             timestamp,
+  score                     float,
   constraint pk_app primary key (id))
 ;
 
@@ -27,6 +28,14 @@ create table fenix_user (
   name                      varchar(255),
   email                     varchar(255),
   constraint pk_fenix_user primary key (username))
+;
+
+create table voter (
+  id                        bigint not null,
+  username                  varchar(255),
+  score                     smallint,
+  app_id                    bigint,
+  constraint pk_voter primary key (id))
 ;
 
 
@@ -59,10 +68,14 @@ create sequence comment_seq;
 
 create sequence fenix_user_seq;
 
+create sequence voter_seq;
+
 alter table comment add constraint fk_comment_author_1 foreign key (author_username) references fenix_user (username);
 create index ix_comment_author_1 on comment (author_username);
 alter table comment add constraint fk_comment_app_2 foreign key (app_id) references app (id);
 create index ix_comment_app_2 on comment (app_id);
+alter table voter add constraint fk_voter_app_3 foreign key (app_id) references app (id);
+create index ix_voter_app_3 on voter (app_id);
 
 
 
@@ -98,9 +111,13 @@ drop table if exists fenix_user_app cascade;
 
 drop table if exists fenix_user_comment cascade;
 
+drop table if exists voter cascade;
+
 drop sequence if exists app_seq;
 
 drop sequence if exists comment_seq;
 
 drop sequence if exists fenix_user_seq;
+
+drop sequence if exists voter_seq;
 

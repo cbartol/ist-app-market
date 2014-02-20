@@ -109,11 +109,12 @@ public class AppController extends Controller {
         }
         Form<Comment> filledForm = Form.form(Comment.class).bindFromRequest();
         if (filledForm.hasErrors()) {
+            return badRequest();
         } else {
             Comment comment = filledForm.get();
             Comment.create(comment, App.get(id), User.get(currentUsername));
+            return ok(views.html.app.comment.render(comment));
         }
-        return redirect(routes.AppController.app(id));
     }
 
     public static Result toggleLikeOnComment(Long commentId) {
@@ -122,6 +123,15 @@ public class AppController extends Controller {
         if (!currentUsername.isEmpty()) {
             Comment.toggleLike(comment, User.get(currentUsername));
         }
-        return redirect(routes.AppController.app(comment.getApp().id));
+        return ok(views.html.app.comment.render(comment));
+    }
+
+    public static Result rate(Long appId, Integer rate) {
+        App app = App.get(appId);
+        User user = User.get(Application.getCurrentUsername());
+        App.rate(app, user, rate.shortValue());
+        //TODO try to use ajax to refresh the rate section
+        //see 'addComment' and 'toggleLikeOnComment' functions
+        return redirect(routes.AppController.app(appId));
     }
 }
