@@ -15,7 +15,7 @@ create table app (
 
 create table comment (
   id                        bigint not null,
-  text                      varchar(255),
+  text                      text,
   creation_date             timestamp,
   likes                     bigint,
   author_username           varchar(255),

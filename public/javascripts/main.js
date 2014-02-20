@@ -15,6 +15,7 @@ function addComment(appId) {
 			text: document.getElementById("addComment").value
 		},
 		success: function(tpl) {
+			$('#addComment').val('');
 			$('#comment-list').prepend(tpl);
 		},
 		error: function(err) {

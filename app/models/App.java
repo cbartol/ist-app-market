@@ -80,6 +80,18 @@ public class App extends Model implements Comparable<App> {
         }
     };
 
+    /**
+     * Score comparator to sort apps
+     * from the highest rated to the lowest rated
+     */
+    public static final Comparator<App> SCORE_COMPARATOR = new Comparator<App>() {
+
+        @Override
+        public int compare(App o1, App o2) {
+            return o1.getScore().compareTo(o2.getScore());
+        }
+    };
+
     private static Finder<Long, App> find = new Finder<Long, App>(Long.class, App.class);
 
     public static List<App> all() {
@@ -184,8 +196,13 @@ public class App extends Model implements Comparable<App> {
     }
 
     public List<Comment> getComments() {
+        return getComments(Comment.DATE_COMPARATOR);
+    }
+
+    public List<Comment> getComments(Comparator<Comment> comparator) {
         List<Comment> result = new ArrayList<Comment>();
         result.addAll(comments);
+        Collections.sort(result, comparator);
         return result;
     }
 

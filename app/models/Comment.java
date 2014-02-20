@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -25,6 +27,7 @@ public class Comment extends Model {
     @Id
     private Long id;
 
+    @Lob
     @Required
     private String text;
 
@@ -40,6 +43,30 @@ public class Comment extends Model {
 
     @ManyToMany
     private Set<User> likedUsers;
+
+    /**
+     * Date comparator to sort comments
+     * from the newest to the oldest
+     */
+    public static final Comparator<Comment> DATE_COMPARATOR = new Comparator<Comment>() {
+
+        @Override
+        public int compare(Comment o1, Comment o2) {
+            return o2.getCreationDate().compareTo(o1.getCreationDate());
+        }
+    };
+
+    /**
+     * Likes comparator to sort comments
+     * from the most liked to the less liked
+     */
+    public static final Comparator<Comment> LIKES_COMPARATOR = new Comparator<Comment>() {
+
+        @Override
+        public int compare(Comment o1, Comment o2) {
+            return o2.getLikes().compareTo(o1.getLikes());
+        }
+    };
 
     private static Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
 
