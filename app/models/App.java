@@ -219,6 +219,10 @@ public class App extends Model implements Comparable<App> {
         return score;
     }
 
+    public int getNVoters() {
+        return getUserRate().size();
+    }
+
     public void reScore() {
         Set<Voter> voters = this.getUserRate();
         double newScore = 0;
@@ -232,5 +236,15 @@ public class App extends Model implements Comparable<App> {
         Voter v = new Voter(username, s, this);
         v.save();
         return v;
+    }
+
+    public int getScore(String currentUsername) {
+        Set<Voter> voters = getUserRate();
+        for (Voter voter : voters) {
+            if (voter.username.equals(currentUsername)) {
+                return voter.score.intValue();
+            }
+        }
+        return 0;
     }
 }

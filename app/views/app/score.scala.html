@@ -1,10 +1,23 @@
 @(app: App)
 
-<p>@app.getScore()</p>
-	<div>
-	    <a href="@routes.AppController.rate(app.id, 1)" >1</a>
-	    <a href="@routes.AppController.rate(app.id, 2)" >2</a>
-	    <a href="@routes.AppController.rate(app.id, 3)" >3</a>
-	    <a href="@routes.AppController.rate(app.id, 4)" >4</a>
-	    <a href="@routes.AppController.rate(app.id, 5)" >5</a>
+	<div class="rateit" id="rate-app" data-rateit-resetable="false" data-rateit-step="1" data-rateit-value="@AppController.getUserRate(app.id)">
 	</div>
+	<section id="rating">
+		(@app.getScore()) (voters: @app.getNVoters())
+	</section>
+	
+	<script type="text/javascript">
+	    $("#rate-app").bind('rated', function (event, value) {
+	    	myJsRoutes.controllers.AppController.rate(@app.id ,value).ajax({
+	    	    success : function(data) {
+	    	    	//tanta pedrada que até doi. FML
+	    	    	var elements = $('<html>'+data+'</html>');
+	    	    	$('#rating').replaceWith(elements[3]);
+	    	    }, 
+	    	    error : function(data) {
+	    	    	$('#rate-app').rateit('value', 0);
+	    	    }
+	    	});
+	    });
+
+	</script>

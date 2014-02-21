@@ -127,11 +127,21 @@ public class AppController extends Controller {
     }
 
     public static Result rate(Long appId, Integer rate) {
+        String currentUsername = Application.getCurrentUsername();
+        if (currentUsername.isEmpty()) {
+            return badRequest();
+        }
         App app = App.get(appId);
         User user = User.get(Application.getCurrentUsername());
         App.rate(app, user, rate.shortValue());
-        //TODO try to use ajax to refresh the rate section
-        //see 'addComment' and 'toggleLikeOnComment' functions
-        return redirect(routes.AppController.app(appId));
+        return ok(views.html.app.score.render(App.get(appId)));
+    }
+
+    public static int getUserRate(Long appId) {
+        String currentUsername = Application.getCurrentUsername();
+        if (!currentUsername.isEmpty()) {
+            return App.get(appId).getScore(currentUsername);
+        }
+        return 0;
     }
 }
